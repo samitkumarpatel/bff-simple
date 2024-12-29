@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: api-gateway
+  security:
+    oauth2:
+      client:
+        registration:
+          api-gateway:
+            provider: "spring"
+            client-id: "api-gateway-client"
+            client-secret: "agsecret"
+            authorization-grant-type: "authorization_code"
+            client-authentication-method: "client_secret_basic"
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - "user.read"
+              - "user.write"
+              - "openid"
+        provider:
+          spring:
+            issuer-uri: http://localhost:9000
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: java-web-server
+          uri: http://127.0.0.1:4200
+          predicates:
+            - Path=/, /spa/**, /ui/**, /frontend/**
+          filters:
+            - RewritePath=/.*,/ # Rewrite all matched paths to "/"
+server:
+  port: 8081
