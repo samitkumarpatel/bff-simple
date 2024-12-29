@@ -15,6 +15,7 @@ To showcase this example , start `authorization-server` and `oauth2-client`
 
 To see if the oauth2 client endpoint are working as expected, you can use the `/` and `/webflux` to get the access token.
 
+---
 
 and `api-gateway` is used in in `api-gateway` example to demonstrate `bff`.
 
